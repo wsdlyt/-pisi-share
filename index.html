@@ -58,11 +58,27 @@
   <h2 class="section-title section-title-featured">🔥 精选推荐</h2>
   <div class="featured-grid" id="featuredGrid"></div>
 
-  <!-- All Articles -->
-  <h2 class="section-title">📋 最新分享</h2>
-  <div class="article-grid" id="articleGrid"></div>
-  <div class="no-results" id="noResults">
-    <p>😔 没有找到相关内容，试试其他关键词吧</p>
+  <div class="content-layout">
+    <!-- 左侧：最新分享（时间流） -->
+    <div class="content-main">
+      <h2 class="section-title">📋 最新分享</h2>
+      <div class="article-list-blog" id="articleList"></div>
+      <div class="no-results" id="noResults">
+        <p>😔 没有找到相关内容，试试其他关键词吧</p>
+      </div>
+    </div>
+
+    <!-- 右侧：热门文章 -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-widget">
+        <h3>🔥 热门资源</h3>
+        <div id="hotArticles"></div>
+      </div>
+      <div class="sidebar-widget">
+        <h3>🏷 分类标签</h3>
+        <div id="tagCloud"></div>
+      </div>
+    </aside>
   </div>
 
 </main>
