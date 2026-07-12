@@ -1,18 +1,5 @@
 [
   {
-    "id": 1,
-    "title": "4K影视 v6.0.2 去广告纯净版，海量高清影视资源免费看",
-    "category": "安卓",
-    "tag": "影视播放",
-    "summary": "4K影视是一款专注于超高清影视资源的聚合平台，提供海量电影、电视剧、综艺等资源，支持投屏与离线缓存。",
-    "image": "https://picsum.photos/seed/4kys/480/300",
-    "date": "2026-07-12",
-    "views": 1680,
-    "featured": true,
-    "badge": "热门",
-    "download": "https://pan.baidu.com/s/1demo1234567"
-  },
-  {
     "id": 2,
     "title": "TVBox 影视盒子 v2025.01 最新接口版，内置源",
     "category": "TV",
@@ -78,32 +65,6 @@
     "download": "https://pan.baidu.com/s/1demo6789012"
   },
   {
-    "id": 7,
-    "title": "Photoshop 2025 绿色便携版，免安装解压即用",
-    "category": "电脑",
-    "tag": "图像处理",
-    "summary": "Photoshop 2025 精简绿色版，无需安装，解压即可使用，保留核心图像处理功能，适合设计师随身携带。",
-    "image": "https://picsum.photos/seed/ps2025/480/300",
-    "date": "2026-07-12",
-    "views": 1120,
-    "featured": false,
-    "badge": "推荐",
-    "download": "https://pan.baidu.com/s/1demo7890123"
-  },
-  {
-    "id": 8,
-    "title": "Clean Master 清理大师 v7.5 解锁高级版",
-    "category": "安卓",
-    "tag": "系统工具",
-    "summary": "Clean Master 高级解锁版，深度清理垃圾文件、缓存、无用安装包，释放手机存储空间。",
-    "image": "https://picsum.photos/seed/clean/480/300",
-    "date": "2026-07-12",
-    "views": 540,
-    "featured": false,
-    "badge": "",
-    "download": "https://pan.baidu.com/s/1demo8901234"
-  },
-  {
     "id": 9,
     "title": "静读天下专业版 v10.6 解锁专业版，纯净小说阅读，支持朗读听书",
     "category": "安卓",
@@ -128,19 +89,6 @@
     "featured": false,
     "badge": "",
     "download": "https://pan.baidu.com/s/1demo9012345"
-  },
-  {
-    "id": 11,
-    "title": "📜【分享】PDF转换器⭕支持多种格式转换⭕免费无广",
-    "category": "安卓",
-    "tag": "系统工具",
-    "summary": "📍【应用名称】PDF 转换器 🌟【应用版本】1.200.9",
-    "image": "https://picsum.photos/seed/1783858356583/480/300",
-    "date": "2026-07-12",
-    "views": 0,
-    "featured": false,
-    "badge": "",
-    "download": "https://pan.quark.cn/s/92cc5b9e1333"
   },
   {
     "id": 12,
