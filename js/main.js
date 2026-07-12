@@ -52,9 +52,9 @@ async function loadArticles() {
     renderAll();
   } catch (err) {
     console.error('加载文章失败:', err);
-    const grid = document.getElementById('articleGrid');
-    if (grid) {
-      grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>暂无内容</p></div>`;
+    const list = document.getElementById('articleList');
+    if (list) {
+      list.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>暂无内容</p></div>';
     }
   }
 }
@@ -63,6 +63,7 @@ async function loadArticles() {
 function renderAll() {
   renderFeatured();
   renderArticles();
+  renderSidebar();
 }
 
 // --- Featured ---
@@ -101,13 +102,13 @@ function createFeaturedCard(a) {
   `;
 }
 
-// --- Article Cards ---
+// --- All Articles (blog style) ---
 function renderArticles() {
-  const grid = document.getElementById('articleGrid');
+  const list = document.getElementById('articleList');
   const noResults = document.getElementById('noResults');
-  if (!grid) return;
+  if (!list) return;
 
-  let filtered = articles;
+  let filtered = articles.slice().sort(function(a, b){ return b.date.localeCompare(a.date); });
 
   if (currentCategory !== '全部') {
     filtered = filtered.filter(a => a.category === currentCategory);
@@ -123,28 +124,29 @@ function renderArticles() {
   }
 
   if (filtered.length === 0) {
-    grid.innerHTML = '';
+    list.innerHTML = '';
     if (noResults) noResults.classList.add('show');
   } else {
     if (noResults) noResults.classList.remove('show');
-    grid.innerHTML = filtered.map(a => createCard(a)).join('');
+    list.innerHTML = filtered.map(a => createBlogCard(a)).join('');
   }
 
-  bindCardClicks();
+  bindBlogCardClicks();
 }
 
-function createCard(a) {
+function createBlogCard(a) {
+  var catClass = a.category === '安卓' ? 'blog-cat-android' : a.category === '电脑' ? 'blog-cat-pc' : 'blog-cat-tv';
   return `
-    <div class="card" data-id="${a.id}">
-      <div class="card-image">
-        <img src="${a.image}" alt="${a.title}" loading="lazy">
-        ${a.badge ? `<span class="card-badge ${a.badge === '热门' ? 'badge-hot' : 'badge-rec'}">${a.badge}</span>` : ''}
-        <span class="card-cat">${a.category}</span>
-      </div>
-      <div class="card-body">
-        <h3 class="card-title">${a.title}</h3>
-        <p class="card-summary">${a.summary}</p>
-        <div class="card-meta">
+    <div class="blog-card" data-id="${a.id}">
+      <img class="blog-thumb" src="${a.image}" alt="${a.title}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22130%22><rect fill=%22%23f3f4f6%22 width=%22200%22 height=%22130%22/></svg>'">
+      <div class="blog-body">
+        <div>
+          <h3 class="blog-title">${a.title}</h3>
+          <p class="blog-summary">${a.summary}</p>
+        </div>
+        <div class="blog-meta">
+          <span class="blog-cat ${catClass}">${a.category}</span>
+          ${a.badge ? `<span class="blog-badge" style="background:#fef2f2;color:#ef4444">${a.badge}</span>` : ''}
           <span>📅 ${a.date}</span>
           <span>👁 ${formatViews(a.views)}</span>
         </div>
@@ -153,14 +155,53 @@ function createCard(a) {
   `;
 }
 
-// --- Card Click -> Detail ---
+function bindBlogCardClicks() {
+  document.querySelectorAll('.blog-card').forEach(el => {
+    el.addEventListener('click', function() {
+      window.location.href = 'article.html?id=' + this.dataset.id;
+    });
+  });
+}
+
+// --- 右侧边栏 ---
+function renderSidebar() {
+  // 热门文章（按阅读量排序 top 8）
+  var hot = articles.slice().sort(function(a, b){ return (b.views||0) - (a.views||0); }).slice(0, 8);
+  var hotDiv = document.getElementById('hotArticles');
+  if (hotDiv && hot.length > 0) {
+    hotDiv.innerHTML = hot.map(function(a, i){
+      var rankClass = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : 'rn';
+      return '<div class="hot-item" onclick="window.location.href=\'article.html?id='+a.id+'\'">'
+        +'<span class="hot-rank '+rankClass+'">'+(i+1)+'</span>'
+        +'<div class="hot-info">'
+        +'<div class="hot-title">'+a.title+'</div>'
+        +'<div class="hot-meta">👁 '+formatViews(a.views)+' · '+a.category+'</div>'
+        +'</div>'
+        +'</div>';
+    }).join('');
+  }
+
+  // 标签云
+  var tagCloud = document.getElementById('tagCloud');
+  if (tagCloud) {
+    var tags = {};
+    articles.forEach(function(a){
+      if(a.tag){ tags[a.tag] = (tags[a.tag]||0) + 1; }
+    });
+    var tagArr = Object.keys(tags).sort(function(a, b){ return tags[b] - tags[a]; });
+    tagCloud.innerHTML = '<div class="tag-cloud">'
+      + tagArr.map(function(t){
+        return '<span class="tag-item" onclick="searchByTag(\''+t.replace(/'/g, "\\'")+'\')">'+t+' ('+tags[t]+')</span>';
+      }).join('')
+      + '</div>';
+  }
+}
+
+// --- Featured Card Click ---
 function bindCardClicks() {
-  document.querySelectorAll('.card, .featured-card').forEach(el => {
+  document.querySelectorAll('.featured-card').forEach(el => {
     el.addEventListener('click', function(e) {
-      const id = this.dataset.id;
-      if (id) {
-        window.location.href = `article.html?id=${id}`;
-      }
+      window.location.href = 'article.html?id=' + this.dataset.id;
     });
   });
 }
@@ -179,6 +220,16 @@ function doSearch() {
   const input = document.getElementById('searchInput');
   currentSearch = input ? input.value.trim() : '';
   renderArticles();
+}
+
+// --- Search by Tag (from sidebar) ---
+function searchByTag(tag) {
+  var input = document.getElementById('searchInput');
+  if (input) {
+    input.value = tag;
+    doSearch();
+  }
+  window.scrollTo(0, 0);
 }
 
 // --- Utilities ---
@@ -249,15 +300,9 @@ function renderDetail(a) {
         <tr><td>更新时间</td><td>${a.date}</td></tr>
       </table>
 
-      <h2>使用说明</h2>
-      <p>1. 下载安装包后直接安装即可使用</p>
-      <p>2. 如遇安装提示安全风险，请选择「仍要安装」或「信任此应用」</p>
-      <p>3. 部分机型首次打开可能会闪退，重新打开即可正常使用</p>
-      <p>4. 建议关闭应用的自动更新，避免被官方版本覆盖</p>
-
       <div class="download-box">
-        <h3>下载地址</h3>
-        <p>${a.download ? '点击下方按钮进入网盘下载' : '暂无下载链接，请联系作者补充'}</p>
+        <h3>📥 下载方式</h3>
+        <p style="font-size:12px;color:var(--t2);margin-bottom:12px">${a.download ? '复制下方链接到浏览器打开，或直接点击按钮跳转' : '暂无下载链接'}</p>
         ${a.download
           ? renderDownloadButtons(a.download)
           : `<button class="btn-download" disabled style="background:#9ca3af;cursor:not-allowed">⛓ 暂无链接</button>`
