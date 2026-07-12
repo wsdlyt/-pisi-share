@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>皮斯分享 - 优质软件资源分享平台</title>
+  <meta name="description" content="皮斯分享，专注分享安卓、电脑、TV等平台的优质软件资源，提供去广告纯净版、解锁高级版等精品应用。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">📦</span>
+      <span>皮斯分享</span>
+    </a>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="搜索软件..." oninput="doSearch()">
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html" class="active">首页</a>
+      <a href="#" onclick="filterCategory('安卓')">安卓</a>
+      <a href="#" onclick="filterCategory('电脑')">电脑</a>
+      <a href="#" onclick="filterCategory('TV')">TV盒子</a>
+    </nav>
+
+    <button class="mobile-menu-btn" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- Announcement -->
+  <div class="announcement">
+    <span class="announcement-icon">📢</span>
+    <div class="announcement-text">
+      <h3>欢迎来到皮斯分享</h3>
+      <p>专注分享安卓、电脑、TV等平台的优质软件资源，所有资源均经安全检测，请放心下载使用。</p>
+    </div>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <button class="cat-btn active" onclick="filterCategory('全部')">全部</button>
+    <button class="cat-btn" onclick="filterCategory('安卓')">📱 安卓</button>
+    <button class="cat-btn" onclick="filterCategory('电脑')">💻 电脑</button>
+    <button class="cat-btn" onclick="filterCategory('TV')">📺 TV盒子</button>
+  </div>
+
+  <!-- Featured -->
+  <h2 class="section-title section-title-featured">🔥 精选推荐</h2>
+  <div class="featured-grid" id="featuredGrid"></div>
+
+  <!-- All Articles -->
+  <h2 class="section-title">📋 最新分享</h2>
+  <div class="article-grid" id="articleGrid"></div>
+  <div class="no-results" id="noResults">
+    <p>😔 没有找到相关内容，试试其他关键词吧</p>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 <a href="index.html">皮斯分享</a> — 优质软件资源分享平台</p>
+  <p style="margin-top:4px;font-size:12px;">本站资源来源于网络，仅供学习交流，请于下载后24小时内删除。</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
