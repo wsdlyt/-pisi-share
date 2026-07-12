@@ -239,7 +239,6 @@ function renderDetail(a) {
     <div class="article-content">
       <h2>软件简介</h2>
       <p>${a.summary}</p>
-      <p>此版本为去广告/解锁/绿化特别版，去除所有不必要的权限和广告组件，让你享受纯净的使用体验。软件已通过安全检测，请放心下载使用。</p>
 
       <h2>软件信息</h2>
       <table class="info-table">
